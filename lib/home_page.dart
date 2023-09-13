@@ -1,7 +1,8 @@
-import 'package:firstgame/main.dart';
+import 'dart:async';
+
+import 'package:firstgame/guestings_letter.dart';
 import 'package:flutter/material.dart';
 
-import 'guestings_letter.dart';
 import 'question.dart';
 import 'letter_item.dart';
 import 'common_image.dart';
@@ -15,18 +16,58 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int coun = 0;
-  bool fals = false;
   int i = 0;
   List<String> _guessingWord = [];
   List<String> _letters = [];
   bool _isIncorrect = false;
+  Timer? _timer;
 
   @override
   void initState() {
     super.initState();
     _guessingWord = List.filled(questions[i].word.length, '');
-    _letters = questions[i].letters;
+    _letters = List.from(questions[i].letters);
+  }
+
+  void _showFoundDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              color: Colors.green,
+            ),
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'You found the word',
+                  style: TextStyle(fontSize: 30),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    setState(() {
+                      i++;
+                      _guessingWord = List.filled(questions[i].word.length, '');
+                      _letters = List.from(questions[i].letters);
+                    });
+                    _timer?.cancel();
+                  },
+                  child: const Text('Go to next question'),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   void _goToNextQuestion(BuildContext context) async {
@@ -48,9 +89,16 @@ class _HomePageState extends State<HomePage> {
                   const Text('You are a WINNER!'),
                   TextButton(
                     onPressed: () {
-                      i = 0;
                       Navigator.pop(context);
-
+                      setState(() {
+                        i = 0;
+                        _guessingWord =
+                            List.filled(questions[i].word.length, '');
+                        _letters = List.from( questions[i].letters);
+                        debugPrint('===> letters ${questions[i].word}');
+                        debugPrint('===> letters ${questions[i].letters}');
+                        _isIncorrect = false;
+                      });
                     },
                     child: const Text('Replay'),
                   ),
@@ -62,42 +110,18 @@ class _HomePageState extends State<HomePage> {
       );
       return;
     } else {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return Dialog(
-            backgroundColor: Colors.transparent,
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: Colors.green,
-              ),
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text(
-                    'You found the word',
-                    style: TextStyle(fontSize: 30),
-                  ),
-                  TextButton(onPressed: (){
-                  }, child: Text(
-                    'Ok'
-                  ))
-                ],
-              ),
-            ),
-          );
+      _showFoundDialog();
+      _timer = Timer(
+        const Duration(seconds: 3),
+            () {
+          Navigator.pop(context);
+          setState(() {
+            i++;
+            _guessingWord = List.filled(questions[i].word.length, '');
+            _letters = List.from(questions[i].letters);
+          });
         },
       );
-      await Future.delayed(Duration(seconds: 3))
-          .then((value) => Navigator.pop(context));
-      setState(() {
-        i++;
-        _guessingWord = List.filled(questions[i].word.length, '');
-        _letters = questions[i].letters;
-
-      });
     }
   }
 
@@ -170,9 +194,16 @@ class _HomePageState extends State<HomePage> {
         children: [
           Column(
             children: [
-              SizedBox(height: 50,),
-              Text('${i + 1}/${questions.length}',style: TextStyle(fontSize: 24,color: Colors.blue),),
-              const SizedBox(height: 60),
+              const SizedBox(height: 40),
+              Text(
+                'Question ${i + 1}/${questions.length}',
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
