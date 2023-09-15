@@ -39,18 +39,22 @@ class _HomePageState extends State<HomePage> {
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
-              color: Colors.green,
+              color: Colors.white,
             ),
+            margin: const EdgeInsets.all(10),
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Text(
                   'You found the word',
-                  style: TextStyle(fontSize: 30),
+                  style: TextStyle(fontSize: 26,color: Colors.black,fontWeight: FontWeight.w800),
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.grey
+                  ),
                   onPressed: () {
                     Navigator.pop(context);
                     setState(() {
@@ -60,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                     });
                     _timer?.cancel();
                   },
-                  child: const Text('Go to next question'),
+                  child: const Text('Go to next question',style: TextStyle(color: Colors.black,fontWeight: FontWeight.w800),),
                 ),
               ],
             ),
@@ -78,16 +82,21 @@ class _HomePageState extends State<HomePage> {
           return Dialog(
             backgroundColor: Colors.transparent,
             child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              margin: const EdgeInsets.all(15),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
-                color: Colors.green,
+                color: Colors.grey,
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text('You reached end of the game!'),
-                  const Text('You are a WINNER!'),
+                  const Text('You reached end of the game!',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w600,fontSize: 20),),
+                  const Text('You are a WINNER!',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w800,fontSize: 28),),
                   TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.black
+                    ),
                     onPressed: () {
                       Navigator.pop(context);
                       setState(() {
@@ -100,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                         _isIncorrect = false;
                       });
                     },
-                    child: const Text('Replay'),
+                    child: const Text('Replay',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w500,fontSize: 16),),
                   ),
                 ],
               ),
@@ -112,7 +121,7 @@ class _HomePageState extends State<HomePage> {
     } else {
       _showFoundDialog();
       _timer = Timer(
-        const Duration(seconds: 3),
+        const Duration(seconds: 2),
             () {
           Navigator.pop(context);
           setState(() {

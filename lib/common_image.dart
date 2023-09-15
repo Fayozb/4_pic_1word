@@ -7,10 +7,10 @@ class CommonImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-            color: Color(0xFF29344F),
+            color: const Color(0xFF29344F),
             borderRadius: BorderRadius.circular(6)
         ),
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         width: 150,
         height: 150,
         child: Image.asset(image,fit: BoxFit.cover,)
