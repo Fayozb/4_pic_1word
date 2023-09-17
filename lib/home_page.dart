@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
-              color: Colors.white,
+              color: const Color(0xFF152242),
             ),
             margin: const EdgeInsets.all(10),
             padding: const EdgeInsets.symmetric(vertical: 20),
@@ -48,12 +48,12 @@ class _HomePageState extends State<HomePage> {
               children: [
                 const Text(
                   'You found the word',
-                  style: TextStyle(fontSize: 26,color: Colors.black,fontWeight: FontWeight.w800),
+                  style: TextStyle(fontSize: 26,color: Colors.white,fontWeight: FontWeight.w800),
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey
+                    backgroundColor: Colors.black
                   ),
                   onPressed: () {
                     Navigator.pop(context);
@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                     });
                     _timer?.cancel();
                   },
-                  child: const Text('Go to next question',style: TextStyle(color: Colors.black,fontWeight: FontWeight.w800),),
+                  child: const Text('Go to next question',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w800),),
                 ),
               ],
             ),
@@ -80,22 +80,24 @@ class _HomePageState extends State<HomePage> {
         context: context,
         builder: (context) {
           return Dialog(
-            backgroundColor: Colors.transparent,
+            backgroundColor: const Color(0xFF152242),
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               margin: const EdgeInsets.all(15),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
-                color: Colors.grey,
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Text('You reached end of the game!',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w600,fontSize: 20),),
+                  SizedBox(height: 10,),
                   const Text('You are a WINNER!',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w800,fontSize: 28),),
-                  TextButton(
+                  SizedBox(height: 10,),
+                  ElevatedButton(
                     style: TextButton.styleFrom(
-                      backgroundColor: Colors.black
+                      minimumSize: const Size(double.infinity, 40),
+                      backgroundColor: Colors.green
                     ),
                     onPressed: () {
                       Navigator.pop(context);
