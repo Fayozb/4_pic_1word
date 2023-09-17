@@ -7,7 +7,6 @@ import 'question.dart';
 import 'letter_item.dart';
 import 'common_image.dart';
 
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -48,13 +47,15 @@ class _HomePageState extends State<HomePage> {
               children: [
                 const Text(
                   'You found the word',
-                  style: TextStyle(fontSize: 26,color: Colors.white,fontWeight: FontWeight.w800),
+                  style: TextStyle(
+                      fontSize: 26,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w800),
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black
-                  ),
+                  style:
+                      ElevatedButton.styleFrom(backgroundColor: Colors.black),
                   onPressed: () {
                     Navigator.pop(context);
                     setState(() {
@@ -64,7 +65,11 @@ class _HomePageState extends State<HomePage> {
                     });
                     _timer?.cancel();
                   },
-                  child: const Text('Go to next question',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w800),),
+                  child: const Text(
+                    'Go to next question',
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.w800),
+                  ),
                 ),
               ],
             ),
@@ -90,28 +95,49 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text('You reached end of the game!',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w600,fontSize: 20),),
-                  SizedBox(height: 10,),
-                  const Text('You are a WINNER!',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w800,fontSize: 28),),
-                  SizedBox(height: 10,),
+                  const Text(
+                    'You reached end of the game!',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Text(
+                    'You are a WINNER!',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 28),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   ElevatedButton(
                     style: TextButton.styleFrom(
-                      minimumSize: const Size(double.infinity, 40),
-                      backgroundColor: Colors.green
-                    ),
+                        minimumSize: const Size(double.infinity, 40),
+                        backgroundColor: Colors.green),
                     onPressed: () {
                       Navigator.pop(context);
                       setState(() {
                         i = 0;
                         _guessingWord =
                             List.filled(questions[i].word.length, '');
-                        _letters = List.from( questions[i].letters);
+                        _letters = List.from(questions[i].letters);
                         debugPrint('===> letters ${questions[i].word}');
                         debugPrint('===> letters ${questions[i].letters}');
                         _isIncorrect = false;
                       });
                     },
-                    child: const Text('Replay',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w500,fontSize: 16),),
+                    child: const Text(
+                      'Replay',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16),
+                    ),
                   ),
                 ],
               ),
@@ -124,7 +150,7 @@ class _HomePageState extends State<HomePage> {
       _showFoundDialog();
       _timer = Timer(
         const Duration(seconds: 2),
-            () {
+        () {
           Navigator.pop(context);
           setState(() {
             i++;
